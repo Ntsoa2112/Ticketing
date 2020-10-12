@@ -19,9 +19,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/login' },
+  '/': { view: 'login_register/login' },
 
-  '/creer_compte': { view: 'pages/creer_compte' },
+  '/creer_compte': { view: 'login_register/creer_compte' },
 
   'post /creer_compte' : 'UserController.create',
 
@@ -30,6 +30,10 @@ module.exports.routes = {
   'post /login' : 'userController.login',
 
   '/logout' : 'userController.logout',
+
+  '/demander_a_trans' : { view: 'demande/demander_a_trans'},
+
+  'post /demander_a_trans' : 'demandeController.demande_a_trans',
 
 
   /***************************************************************************

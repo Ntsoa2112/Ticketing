@@ -11,6 +11,9 @@
   <p>Catégorie: <%= session.User.categorie %></p>
   
   
-  <a href="/logout">Se déconnecter</a>
+  <a href="/logout">Se déconnecter</a><br>
+  <% if(session.User.categorie != 'trans'){ %>
+    <a href="/demander_a_trans">Faire une demande</a>
+  <% } %>
 </body>
 </html>
