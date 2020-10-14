@@ -17,11 +17,8 @@ module.exports = {
               User.findOne({
                   matricule: req.param('matricule'),
                 }).exec(function (err, user) {
-                  req.session.authenticated = true;
-                  req.session.User = user;
-
-                  // Redirect to protected area
-                  return res.redirect('/dashboard');
+                  
+                  return res.redirect('/');
                 });
             };
         });

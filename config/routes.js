@@ -21,11 +21,13 @@ module.exports.routes = {
 
   '/': { view: 'login_register/login' },
 
+  'get /form_demande/:id_demande': 'demandeController.get_form_demande',
+
   '/creer_compte': { view: 'login_register/creer_compte' },
 
   'post /creer_compte' : 'UserController.create',
 
-  '/dashboard' : { view: 'pages/dashboard' },
+  '/dashboard' : 'DashboardController.affichage',
 
   'post /login' : 'userController.login',
 

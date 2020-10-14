@@ -4,17 +4,343 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bienvenue à l'easytech</title>
+  <link
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  rel="stylesheet"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
 
 </head>
 <body>
-  <h1>Tableau de bord</h1>
-  <p>Matricule: <%= session.User.matricule %></p>
-  <p>Catégorie: <%= session.User.categorie %></p>
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="/">TABLEAU DE BORD</a>
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
   
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  href="/logout">Se déconnecter</a>
+            <% if(session.User.categorie != 'trans'){ %>
+        </li>
+        <li>
+          <a class="nav-link" href="/demander_a_trans">Faire une demande</a>
+            <% } %>
+        </li>       
+      </ul>
+    </div>
+  </nav>
+         
+
+  <h2 style="text-align:center">Tableau de bord</h2>
+
+<table class="table-dark" style="display: center">
+  <thead>
+    <tr>
+      <td>Matricule: <%= session.User.matricule %></td>
+    </tr>
+    <tr>
+      <td>Catégorie: <%= session.User.categorie %></td>
+    </tr>
+  </thead>  
+</table>
+ 
   
-  <a href="/logout">Se déconnecter</a><br>
-  <% if(session.User.categorie != 'trans'){ %>
-    <a href="/demander_a_trans">Faire une demande</a>
-  <% } %>
+      <!-- NOUVELLE ENTREE -->
+  <h3>Nouvelle tâche</h3>
+    <table class="table table-hover" >
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Objet</th>
+          <th scope="col">Priorité</th>
+          <th scope="col">Tache</th>
+          <th scope="col">Taille du fichier</th>
+          <th scope="col">Expediteur</th>
+          <th scope="col">Etat</th>
+        </tr>
+      </thead>
+      <tbody>
+          <%           
+          for(var i=0; i<demande.length; i++) {
+            if(demande[i].etat_demande == "nouvelle"){ %>
+        <tr>
+            <th scope="row"><%= (i+1) %></th>
+            <td><%= demande[i].objet %></td>
+            <td>
+              <%= demande[i].priorite %>
+            </td>
+            <td>
+              <%= demande[i].tache %>
+            </td>
+            <td>
+              <%= demande[i].size %>
+            </td>
+            <td>
+              <%= demande[i].categorie %>
+            </td>
+            <td>
+              <a href="/form_demande/<%= demande[i].id %>">Prendre</a>
+            </td>
+        </form>
+        </tr>
+        <% 
+            }
+          } %>
+      </tbody>
+    </table>
+    
+   <!-- EN COURS -->
+  
+   <h3>En-cours</h3>
+
+   <table class="table table-hover">
+     <thead class="thead-light">
+       <tr>
+         <th scope="col">#</th>
+         <th scope="col">Objet</th>
+         <th scope="col">Priorité</th>
+         <th scope="col">Tache</th>
+         <th scope="col">Taille du fichier</th>
+         <th scope="col">Heure Prise en charge</th>
+         <th scope="col">Heure Début transfert</th>
+         <th scope="col">Heure Fin transfert</th>
+         <th scope="col">Statut</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <th scope="row">1</th>
+         <td>text</td>
+         <td>
+           <select>
+             <option value="P1">Prod_1</option>
+             <option value="P2">Prod_2</option>
+             <option value="P3">Prod_3</option>
+             <option value="P4">Prod_4</option>
+             <option value="P5">Prod_5</option>
+           </select>
+         </td>
+         <td>
+           <select>
+            <option value="Nouveau">Nouveau</option>
+            <option value="Recup">Récuperation</option>
+            <option value="Livraison">Livraison</option>
+           </select>
+         </td>
+         <td>1go</td>
+         <td>12:00:00</td>
+         <td>13:00:00</td>
+         <td>13:15:05</td>
+         <td>
+         <button>
+          <select>
+            <option value="Nouveau">Nouveau</option>
+            <option value="En-cours">En cours</option>
+            <option value="Terminer">Terminer</option>
+          </select>
+        </button>
+        </td>
+       </tr>
+       <tr>
+         <th scope="row">2</th>
+         <td>text</td>
+         <td>
+           <select>
+             <option value="P1">Prod_1</option>
+             <option value="P2">Prod_2</option>
+             <option value="P3">Prod_3</option>
+             <option value="P4">Prod_4</option>
+             <option value="P5">Prod_5</option>
+           </select>
+         </td>
+         <td>
+           <select>
+             <option value="Recup">Récuperation</option>
+             <option value="Livraison">Livraison</option>
+           </select>
+         </td>
+         <td>1go</td>
+         <td>11:01:00</td>
+         <td>13:08:00</td>
+         <td>14:15:05</td>
+         <td>
+         <button>
+          <select>
+            <option value="Nouveau">Nouveau</option>
+            <option value="En-cours">En cours</option>
+            <option value="Terminer">Terminer</option>
+          </select>
+        </button>
+        </td>
+       </tr>
+       <tr>
+         <th scope="row">3</th>
+         <td>text</td>
+         <td>
+           <select>
+             <option value="P1">Prod_1</option>
+             <option value="P2">Prod_2</option>
+             <option value="P3">Prod_3</option>
+             <option value="P4">Prod_4</option>
+             <option value="P5">Prod_5</option>
+           </select>
+         </td>
+         <td>
+           <select>
+             <option value="Recup">Récuperation</option>
+             <option value="Livraison">Livraison</option>
+           </select>
+         </td>
+         <td>1go</td>
+         <td>12:00:00</td>
+         <td>15:04:40</td>
+         <td>17:35:00</td>
+         <td>
+        <button>
+          <select>
+            <option value="Nouveau">Nouveau</option>
+            <option value="En-cours">En cours</option>
+            <option value="Terminer">Terminer</option>
+          </select>
+        </button>
+        </td>
+       </tr>
+     </tbody>
+   </table>
+   
+
+   <!-- TERMINER -->
+  
+  <h3>Terminer</h3>
+
+    <table class="table table-hover">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Objet</th>
+          <th scope="col">Priorité</th>
+          <th scope="col">Tache</th>
+          <th scope="col">Taille du fichier</th>
+          <th scope="col">Heure Prise en charge</th>
+          <th scope="col">Heure Début transfert</th>
+          <th scope="col">Heure Fin transfert</th>
+          <th scope="col">Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>text</td>
+          <td>
+            <select>
+              <option value="P1">Prod_1</option>
+              <option value="P2">Prod_2</option>
+              <option value="P3">Prod_3</option>
+              <option value="P4">Prod_4</option>
+              <option value="P5">Prod_5</option>
+            </select>
+          </td>
+          <td>
+            <select>
+              <option value="Recup">Récuperation</option>
+              <option value="Livraison">Livraison</option>
+            </select>
+          </td>
+          <td>1go</td>
+          <td>12:00:00</td>
+          <td>13:00:00</td>
+          <td>13:15:05</td>
+          <td>
+          <button>
+            <select>
+              <option value="Nouveau">Nouveau</option>
+              <option value="En-cours">En cours</option>
+              <option value="Terminer">Terminer</option>
+            </select>
+          </button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>text</td>
+          <td>
+            <select>
+              <option value="P1">Prod_1</option>
+              <option value="P2">Prod_2</option>
+              <option value="P3">Prod_3</option>
+              <option value="P4">Prod_4</option>
+              <option value="P5">Prod_5</option>
+            </select>
+          </td>
+          <td>
+            <select>
+              <option value="Recup">Récuperation</option>
+              <option value="Livraison">Livraison</option>
+            </select>
+          </td>
+          <td>1go</td>
+          <td>11:01:00</td>
+          <td>13:08:00</td>
+          <td>14:15:05</td>
+          <td>
+          <button>
+            <select>
+              <option value="Nouveau">Nouveau</option>
+              <option value="En-cours">En cours</option>
+              <option value="Terminer">Terminer</option>
+            </select>
+          </button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>text</td>
+          <td>
+            <select>
+              <option value="P1">Prod_1</option>
+              <option value="P2">Prod_2</option>
+              <option value="P3">Prod_3</option>
+              <option value="P4">Prod_4</option>
+              <option value="P5">Prod_5</option>
+            </select>
+          </td>
+          <td>
+            <select>
+              <option value="Recup">Récuperation</option>
+              <option value="Livraison">Livraison</option>
+            </select>
+          </td>
+          <td>1go</td>
+          <td>12:00:00</td>
+          <td>15:04:40</td>
+          <td>17:35:00</td>
+          <td>
+            <button>
+              <select>
+                <option value="Nouveau">Nouveau</option>
+                <option value="En-cours">En cours</option>
+                <option value="Terminer">Terminer</option>
+              </select>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  
 </body>
 </html>
