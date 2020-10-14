@@ -1,12 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <p>Objet: <%= oneDemande.objet %></p>
-</body>
-</html>
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title"></h2>
+                    <form method="POST" action="form_demande">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Objet: <%= oneDemande.objet %></label>
+                                </div>
+                            </div>
+                        </div>  <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Priorité: <%= oneDemande.priorite %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Tâche: <%= oneDemande.tache %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="example-datetime-local-input" class="label">Date et Heure de Prise en charge</label>
+                            <div class="col-10">
+                              <input class="input--style-4" type="datetime-local"  id="example-datetime-local-input">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="example-datetime-local-input" class="label">Heure de début transfer</label>
+                            <div class="col-10">
+                              <input class="input--style-4" type="datetime-local" id="example-datetime-local-input">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label for="example-datetime-local-input" class="label">Heure fin du transfer</label>
+                            <div class="col-10">
+                              <input class="input--style-4" type="datetime-local" id="example-datetime-local-input">
+                            </div>
+                        </div>
+                       
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Valider</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
