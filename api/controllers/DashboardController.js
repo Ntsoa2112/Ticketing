@@ -21,6 +21,7 @@ module.exports = {
     affichage: function (req, res){
         Demande.find(function foundDemande(err, demande){
             if (err) return res.send(err);
+            
             res.view('pages/dashboard', { demande: demande });
         });
     },

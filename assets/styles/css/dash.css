@@ -1,0 +1,13 @@
+body {
+    background-color: rgb(221, 213, 213);
+  }
+
+.contenu{
+    background-color: rgb(241, 235, 235);
+
+}
+
+.test{
+    background-color: rgba(97, 93, 93, 0.952);
+    color: white;
+}

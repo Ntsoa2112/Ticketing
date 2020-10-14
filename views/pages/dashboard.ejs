@@ -10,9 +10,9 @@
   integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
   crossorigin="anonymous"
 />
-
+  <link href="css/dash.css" rel="stylesheet" media="all">
 </head>
-<body>
+<body>  
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <a class="navbar-brand" href="/">TABLEAU DE BORD</a>
     <button
@@ -43,9 +43,11 @@
     </div>
   </nav>
          
+<br/><br/>
 
   <h2 style="text-align:center">Tableau de bord</h2>
 
+<br/><br/>
 <table class="table-dark" style="display: center">
   <thead>
     <tr>
@@ -56,12 +58,121 @@
     </tr>
   </thead>  
 </table>
- 
-  
+
+<br/><br/>
+ <div class="contenu">
       <!-- NOUVELLE ENTREE -->
-  <h3>Nouvelle tâche</h3>
+  <h4>Nouvelle tâche</h4>
     <table class="table table-hover" >
-      <thead class="thead-light">
+        <thead class="test">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Objet</th>
+          <th scope="col">Priorité</th>
+          <th scope="col">Tache</th>
+          <th scope="col">Code</th>
+          <th scope="col">Taille</th>
+          <th scope="col">Chemin</th>
+          <th scope="col">Expediteur</th>
+          <th scope="col">Etat</th>
+        </tr>
+      </thead>
+      <tbody>
+          <%           
+          for(var i=0; i<demande.length; i++) {
+            if(demande[i].etat_demande == "nouvelle" || demande[i].etat_demande == ''){ %>
+        <tr>
+            <th scope="row"><%= (i+1) %></th>
+            <td><%= demande[i].objet %></td>
+            <td>
+              <%= demande[i].priorite %>
+            </td>
+            <td>
+              <%= demande[i].tache %>
+            </td>
+            <td>
+              <%= demande[i].code %>
+            </td>
+            <td>
+                <%= demande[i].size %>
+              </td>
+            <td>
+              <%= demande[i].chemin %>
+            </td>
+            
+            <td>
+              <%= demande[i].categorie %>
+            </td>
+            <td>
+              <% if(session.User.categorie == 'trans') { %>
+              <a href="/valide_form_demande/<%= demande[i].id %>">Prendre</a>
+              <% }
+              else{ %>
+                  En attente
+                <% } %>
+            </td>
+        </form>
+        </tr>
+        <% 
+            }
+          } %>
+      </tbody>
+    </table>
+    
+   <!-- EN COURS -->
+   <br/><br/>
+   <h4>En-cours</h4>
+
+   <table class="table table-hover">
+      <thead class="test">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Objet</th>
+        <th scope="col">Priorité</th>
+        <th scope="col">Tache</th>
+        <th scope="col">Taille du fichier</th>
+        <th scope="col">Expediteur</th>
+        <th scope="col">Etat</th>
+      </tr>
+    </thead>
+    <tbody>
+        <%           
+        for(var i=0; i<demande.length; i++) {
+          if(demande[i].etat_demande == "encours"){ %>
+      <tr>
+          <th scope="row"><%= (i+1) %></th>
+          <td><%= demande[i].objet %></td>
+          <td>
+            <%= demande[i].priorite %>
+          </td>
+          <td>
+            <%= demande[i].tache %>
+          </td>
+          <td>
+            <%= demande[i].size %>
+          </td>
+          <td>
+            <%= demande[i].categorie %>
+          </td>
+          <td>
+
+            <a href="/form_demande/<%= demande[i].id %>">Prendre</a>
+          </td>
+      </form>
+      </tr>
+      <% 
+          }
+        } %>
+    </tbody>
+   </table>
+   
+
+   <!-- TERMINER -->
+   <br/><br/>
+  <h4>Terminer</h4>
+
+    <table class="table table-hover">
+      <thead class="test">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Objet</th>
@@ -75,7 +186,7 @@
       <tbody>
           <%           
           for(var i=0; i<demande.length; i++) {
-            if(demande[i].etat_demande == "nouvelle"){ %>
+            if(demande[i].etat_demande == "terminer"){ %>
         <tr>
             <th scope="row"><%= (i+1) %></th>
             <td><%= demande[i].objet %></td>
@@ -101,246 +212,8 @@
           } %>
       </tbody>
     </table>
+  </div>  
+  
     
-   <!-- EN COURS -->
-  
-   <h3>En-cours</h3>
-
-   <table class="table table-hover">
-     <thead class="thead-light">
-       <tr>
-         <th scope="col">#</th>
-         <th scope="col">Objet</th>
-         <th scope="col">Priorité</th>
-         <th scope="col">Tache</th>
-         <th scope="col">Taille du fichier</th>
-         <th scope="col">Heure Prise en charge</th>
-         <th scope="col">Heure Début transfert</th>
-         <th scope="col">Heure Fin transfert</th>
-         <th scope="col">Statut</th>
-       </tr>
-     </thead>
-     <tbody>
-       <tr>
-         <th scope="row">1</th>
-         <td>text</td>
-         <td>
-           <select>
-             <option value="P1">Prod_1</option>
-             <option value="P2">Prod_2</option>
-             <option value="P3">Prod_3</option>
-             <option value="P4">Prod_4</option>
-             <option value="P5">Prod_5</option>
-           </select>
-         </td>
-         <td>
-           <select>
-            <option value="Nouveau">Nouveau</option>
-            <option value="Recup">Récuperation</option>
-            <option value="Livraison">Livraison</option>
-           </select>
-         </td>
-         <td>1go</td>
-         <td>12:00:00</td>
-         <td>13:00:00</td>
-         <td>13:15:05</td>
-         <td>
-         <button>
-          <select>
-            <option value="Nouveau">Nouveau</option>
-            <option value="En-cours">En cours</option>
-            <option value="Terminer">Terminer</option>
-          </select>
-        </button>
-        </td>
-       </tr>
-       <tr>
-         <th scope="row">2</th>
-         <td>text</td>
-         <td>
-           <select>
-             <option value="P1">Prod_1</option>
-             <option value="P2">Prod_2</option>
-             <option value="P3">Prod_3</option>
-             <option value="P4">Prod_4</option>
-             <option value="P5">Prod_5</option>
-           </select>
-         </td>
-         <td>
-           <select>
-             <option value="Recup">Récuperation</option>
-             <option value="Livraison">Livraison</option>
-           </select>
-         </td>
-         <td>1go</td>
-         <td>11:01:00</td>
-         <td>13:08:00</td>
-         <td>14:15:05</td>
-         <td>
-         <button>
-          <select>
-            <option value="Nouveau">Nouveau</option>
-            <option value="En-cours">En cours</option>
-            <option value="Terminer">Terminer</option>
-          </select>
-        </button>
-        </td>
-       </tr>
-       <tr>
-         <th scope="row">3</th>
-         <td>text</td>
-         <td>
-           <select>
-             <option value="P1">Prod_1</option>
-             <option value="P2">Prod_2</option>
-             <option value="P3">Prod_3</option>
-             <option value="P4">Prod_4</option>
-             <option value="P5">Prod_5</option>
-           </select>
-         </td>
-         <td>
-           <select>
-             <option value="Recup">Récuperation</option>
-             <option value="Livraison">Livraison</option>
-           </select>
-         </td>
-         <td>1go</td>
-         <td>12:00:00</td>
-         <td>15:04:40</td>
-         <td>17:35:00</td>
-         <td>
-        <button>
-          <select>
-            <option value="Nouveau">Nouveau</option>
-            <option value="En-cours">En cours</option>
-            <option value="Terminer">Terminer</option>
-          </select>
-        </button>
-        </td>
-       </tr>
-     </tbody>
-   </table>
-   
-
-   <!-- TERMINER -->
-  
-  <h3>Terminer</h3>
-
-    <table class="table table-hover">
-      <thead class="thead-light">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Objet</th>
-          <th scope="col">Priorité</th>
-          <th scope="col">Tache</th>
-          <th scope="col">Taille du fichier</th>
-          <th scope="col">Heure Prise en charge</th>
-          <th scope="col">Heure Début transfert</th>
-          <th scope="col">Heure Fin transfert</th>
-          <th scope="col">Statut</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>text</td>
-          <td>
-            <select>
-              <option value="P1">Prod_1</option>
-              <option value="P2">Prod_2</option>
-              <option value="P3">Prod_3</option>
-              <option value="P4">Prod_4</option>
-              <option value="P5">Prod_5</option>
-            </select>
-          </td>
-          <td>
-            <select>
-              <option value="Recup">Récuperation</option>
-              <option value="Livraison">Livraison</option>
-            </select>
-          </td>
-          <td>1go</td>
-          <td>12:00:00</td>
-          <td>13:00:00</td>
-          <td>13:15:05</td>
-          <td>
-          <button>
-            <select>
-              <option value="Nouveau">Nouveau</option>
-              <option value="En-cours">En cours</option>
-              <option value="Terminer">Terminer</option>
-            </select>
-          </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>text</td>
-          <td>
-            <select>
-              <option value="P1">Prod_1</option>
-              <option value="P2">Prod_2</option>
-              <option value="P3">Prod_3</option>
-              <option value="P4">Prod_4</option>
-              <option value="P5">Prod_5</option>
-            </select>
-          </td>
-          <td>
-            <select>
-              <option value="Recup">Récuperation</option>
-              <option value="Livraison">Livraison</option>
-            </select>
-          </td>
-          <td>1go</td>
-          <td>11:01:00</td>
-          <td>13:08:00</td>
-          <td>14:15:05</td>
-          <td>
-          <button>
-            <select>
-              <option value="Nouveau">Nouveau</option>
-              <option value="En-cours">En cours</option>
-              <option value="Terminer">Terminer</option>
-            </select>
-          </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>text</td>
-          <td>
-            <select>
-              <option value="P1">Prod_1</option>
-              <option value="P2">Prod_2</option>
-              <option value="P3">Prod_3</option>
-              <option value="P4">Prod_4</option>
-              <option value="P5">Prod_5</option>
-            </select>
-          </td>
-          <td>
-            <select>
-              <option value="Recup">Récuperation</option>
-              <option value="Livraison">Livraison</option>
-            </select>
-          </td>
-          <td>1go</td>
-          <td>12:00:00</td>
-          <td>15:04:40</td>
-          <td>17:35:00</td>
-          <td>
-            <button>
-              <select>
-                <option value="Nouveau">Nouveau</option>
-                <option value="En-cours">En cours</option>
-                <option value="Terminer">Terminer</option>
-              </select>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-
-  
 </body>
 </html>

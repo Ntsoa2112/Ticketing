@@ -1,5 +1,5 @@
 /**
- * Demande.js
+ * Fake.js
  *
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -8,17 +8,12 @@
 module.exports = {
 
   attributes: {
-    objet: { type: 'string', required: true },
-    priorite: { type: 'string', required: true },
-    tache: { type: 'string', required: true },
     code: { type: 'string', required: true },
     size: { type: 'string', required: true },
     chemin: { type: 'string', required: true },
-    categorie: { type: 'string', required: true },
-    etat_demande: { type: 'string',  required: false },
-    matricule: { model:'User' },
   },
 
   datastore : 'default'
+
 };
 

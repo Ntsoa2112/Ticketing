@@ -11,7 +11,7 @@ module.exports = {
     create: function(req, res){
         User.create(req.allParams(), function userCreated(err, user){
             if(err){
-                res.send("Erreur:" + err);
+                return res.send("Erreur:" + err);
             }
             else{
               User.findOne({

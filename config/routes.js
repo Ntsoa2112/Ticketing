@@ -21,8 +21,6 @@ module.exports.routes = {
 
   '/': { view: 'login_register/login' },
 
-  'get /form_demande/:id_demande': 'demandeController.get_form_demande',
-
   '/creer_compte': { view: 'login_register/creer_compte' },
 
   'post /creer_compte' : 'UserController.create',
@@ -37,6 +35,13 @@ module.exports.routes = {
 
   'post /demander_a_trans' : 'demandeController.demande_a_trans',
 
+  '/fake' :  { view: 'fake/form'},
+
+  'post /fake' : 'fakeController.create',
+
+  'get /valide_form_demande/:id_demande': 'demandeController.get_form_demande',
+
+  'get /valide_form_demande/form_demande/:id_demande': 'demandeController.prendre_demande',
 
   /***************************************************************************
   *                                                                          *
