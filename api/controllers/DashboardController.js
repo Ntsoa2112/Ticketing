@@ -22,7 +22,9 @@ module.exports = {
         Demande.find(function foundDemande(err, demande){
             if (err) return res.send(err);
             
-            res.view('pages/dashboard', { demande: demande });
+            Effectuer_tache.find(function foundEffectuer_tache(err, tache_en_cours){
+                res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours });
+            });
         });
     },
 

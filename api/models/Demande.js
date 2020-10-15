@@ -15,7 +15,7 @@ module.exports = {
     size: { type: 'string', required: true },
     chemin: { type: 'string', required: true },
     categorie: { type: 'string', required: true },
-    etat_demande: { type: 'string',  required: false },
+    etat_demande: { type: 'string',  defaultsTo: 'nouvelle' },
     matricule: { model:'User' },
   },
 

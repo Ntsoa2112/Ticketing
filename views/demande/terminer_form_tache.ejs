@@ -4,10 +4,7 @@
                 <div class="card-body">
                     <h2 class="title"></h2>
 
- 
-                    <form method="GET" action="form_demande/<%=oneDemande.id%>">
-  
-
+                    <form method="POST" action="terminer_tache/<%=OneTache.id%>/<%= oneDemande.id %>">
 
                         <div class="row row-space">
                             <div class="col-2">
@@ -61,16 +58,14 @@
                         <div class="row row-space">
                                 <div >
                                     <div class="input-group">                                    
-                                        <label class="label">Date et heure de demande: <%= datecreation %> à <%= timecreation %></label>
+                                            <label class="label">Date et heure de prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
                                     </div>
                                 </div>
                             </div>
                        
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Valider</button>
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Terminer</button>
                         </div>
-
-                        
                     </form>
                 </div>
             </div>

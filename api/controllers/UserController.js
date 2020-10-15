@@ -14,12 +14,7 @@ module.exports = {
                 return res.send("Erreur:" + err);
             }
             else{
-              User.findOne({
-                  matricule: req.param('matricule'),
-                }).exec(function (err, user) {
-                  
-                  return res.redirect('/');
-                });
+                return res.redirect('/');
             };
         });
     },

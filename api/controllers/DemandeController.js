@@ -45,17 +45,15 @@ module.exports = {
 
     prendre_demande: function(req, res){
         Demande.findOne(req.param('id_demande'), function foundOneFake(err, OneDemande){
-            if(err) return res.send("Erreur :" + err);
+            if(err) return res.send(err);
             var id_demande = OneDemande.id;
             var matricule_trans = req.session.User.matricule;           
             Effectuer_tache.create({id_demande, matricule_trans} , async function takeDemande(err){
                 if(err) return res.send("Erreur : " + err);
-                console.log("Mety prendre demande");
                 var etat_demande = 'En cours';
                
                 await Demande.updateOne(id_demande, {etat_demande : etat_demande}, function updateDemande(err){
-                    if(err) return res.send("Erreur : " + err);
-                    console.log("Mety update");
+                    if(err) return res.send( err);
                     return res.redirect('/dashboard');
                 });
                 
@@ -63,6 +61,38 @@ module.exports = {
 
         });
     },
+
+    valider_form_terminer: function(req, res){
+        var id_demande = req.param('id_demande');
+        console.log("Ety");
+        Demande.findOne(id_demande, function foundOneFake(err, OneDemande){
+            if(err) return res.send(err);
+            Effectuer_tache.findOne({id_demande:id_demande}, function foundOneDemande(err, OneTache){
+                if(err) return res.send(err);
+                var datePriseEnCharge = new Date(OneTache.createdAt).toLocaleDateString();
+                var timePriseEnCharge = new Date(OneTache.createdAt).toLocaleTimeString(); 
+                res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge });
+            });
+        });
+    },
+
+    tache_terminer: function(req, res){
+        var id_tache = req.param('id_tache');
+        var id_demande = req.param('id_demande');
+        var now = new Date();
+        var dateNow = now.toLocaleDateString();
+        var timeNow = now.toLocaleTimeString();
+        var H_fin_transfert = dateNow + " à " + timeNow;
+
+        Effectuer_tache.updateOne({id:id_tache}, {H_fin_transfert:H_fin_transfert, statu:'Terminer'}, function(err){
+            if(err) return res.send( err);
+            Demande.updateOne({id:id_demande}, {etat_demande:'Terminer'}, function(err){
+                if(err) return res.send( err);
+                return res.redirect('/dashboard');
+            })
+
+        })
+    }
 
 };
 

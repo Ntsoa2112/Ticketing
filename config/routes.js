@@ -43,6 +43,10 @@ module.exports.routes = {
 
   'get /valide_form_demande/form_demande/:id_demande': 'demandeController.prendre_demande',
 
+  '/valide_form_terminer/:id_demande': 'demandeController.valider_form_terminer',
+
+  'post /valide_form_terminer/terminer_tache/:id_tache/:id_demande': 'demandeController.tache_terminer',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
