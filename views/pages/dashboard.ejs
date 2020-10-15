@@ -60,7 +60,7 @@
 
 <br/>
 <div class="card">
-  <div class="card-header">
+  <div >
 
 
  <div class="contenu">
@@ -69,7 +69,7 @@
     <table class="table table-hover" >
       <thead class="test">
         <tr>
-          <th scope="col">#</th>
+         
           <th scope="col">Objet</th>
           <th scope="col">Priorité</th>
           <th scope="col">Tache</th>
@@ -81,11 +81,11 @@
         </tr>
       </thead>
       <tbody>
-        <%           
+        <%    
         for(var i=0; i<demande.length; i++) {
-          if(demande[i].etat_demande == "nouvelle"){ %>
+          if(demande[i].etat_demande == 'nouvelle'){ %>
       <tr>
-          <th scope="row"><%= (i+1) %></th>
+         
           <td>
             <%= demande[i].objet %>
           </td>
@@ -110,7 +110,7 @@
           </td>
           <td>
             <% if(session.User.categorie == 'trans'){ %>
-            <a type="button" class="btn btn-secondary" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
+            <a type="button" class="btn btn-secondary" id="boutt" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
             <%
             }
               else{ 
@@ -133,7 +133,7 @@
    <table class="table table-hover" >
     <thead class="test">
       <tr>
-        <th scope="col">#</th>
+        
         <th scope="col">Objet</th>
         <th scope="col">Priorité</th>
         <th scope="col">Tache</th>
@@ -142,18 +142,21 @@
         <th scope="col">Chemin</th>
         <th scope="col">Expediteur</th>
         <th scope="col">Réalisateur</th>
+        <th scope="col">Début</th>
         <th scope="col">Etat</th>
       </tr>
     </thead>
     <tbody>
       <%           
       for(var i=0; i < tache_en_cours.length; i++) {
-        if(tache_en_cours[i].statu == 'En cours'){
+        if(tache_en_cours[i].statu != 'Terminer'){
         var id_demande = tache_en_cours[i].id_demande;
+        var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
+        var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
 
         %>
     <tr>
-        <th scope="row"><%= (i+1) %></th>
+        
         <%           
         for(var j=0; j<demande.length; j++) {
             if(demande[j].id == id_demande){
@@ -190,9 +193,26 @@
           <%= tache_en_cours[i].matricule_trans %>
         </td>
         <td>
-            <% if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
-              <a type="button" class="btn btn-danger"  >Stand By</a>
-              <a type="button" class="btn btn-primary" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
+            <%= dateDebut %> à <%= timedebut %>
+        </td>
+        <td>
+            <% 
+            if(tache_en_cours[i].statu == 'Stand By'){
+            %>
+              <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
+              <% 
+              if(session.User.categorie == 'trans'){
+                if(session.User.matricule == tache_en_cours[i].matricule_trans){
+              %>
+              <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
+            <%
+                }
+              }
+            }
+            
+            else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
+              <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
+              <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
             <% 
               }
               else{
@@ -217,7 +237,7 @@
    <table class="table table-hover" >
       <thead class="test">
         <tr>
-          <th scope="col">#</th>
+         
           <th scope="col">Objet</th>
           <th scope="col">Priorité</th>
           <th scope="col">Tache</th>
@@ -226,7 +246,8 @@
           <th scope="col">Chemin</th>
           <th scope="col">Expediteur</th>
           <th scope="col">Réalisateur</th>
-          <th scope="col">Etat</th>
+          <th scope="col">Début</th>
+          <th scope="col">Fin</th>
         </tr>
       </thead>
       <tbody>
@@ -236,7 +257,7 @@
             var id_demande = demande[i].id;
             %>
       <tr>
-          <th scope="row"><%= (i+1) %></th>
+         
           <td><%= demande[i].objet %></td>
           <td>
             <%= demande[i].priorite %>
@@ -260,20 +281,23 @@
           <td>
               <%
               for(var e=0; e < tache_en_cours.length; e++) {
-                if(id_demande = tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
-                  %>
-                 <%= tache_en_cours[e].matricule_trans %>
-                  <%
-                  break;
-                }
-
-              }
-              
-              %>
+                if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
+                  var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
+                  var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
+                %>
+                <%= tache_en_cours[e].matricule_trans %>
+                
           </td>
           <td>
-            Terminer
+              <%= dateDebut %> à <%= timedebut %>
           </td>
+          <td>
+              <%= tache_en_cours[e].H_fin_transfert %>
+          </td>
+              <%                 
+                }
+              }             
+              %>
        </tr>
       <% 
           }

@@ -47,6 +47,10 @@ module.exports.routes = {
 
   'post /valide_form_terminer/terminer_tache/:id_tache/:id_demande': 'demandeController.tache_terminer',
 
+  '/stand_by/:id_demande/:id_tache' : 'demandeController.stand_by',
+
+  '/tache_continuer/:id_demande/:id_tache' : 'demandeController.continuer_tache',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

@@ -1,5 +1,7 @@
 body {
     background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+    margin: 0;
+    padding: 0;
   }
 
 .contenu{

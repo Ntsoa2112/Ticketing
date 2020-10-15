@@ -92,6 +92,33 @@ module.exports = {
             })
 
         })
+    },
+
+    stand_by: function(req, res){
+        var id_demande = req.param('id_demande');
+        var id_tache = req.param('id_tache');
+        Effectuer_tache.updateOne({id:id_tache}, {statu:'Stand By'}, function(err){
+            if(err) return res.send(err);
+            Demande.updateOne({id:id_demande}, {etat_demande:'Stand By'}, function(err){
+                if(err) return res.send( err);
+                return res.redirect('/dashboard');
+            })
+
+        })
+
+    },
+
+    continuer_tache: function(req, res){
+        var id_demande = req.param('id_demande');
+        var id_tache = req.param('id_tache');
+        Effectuer_tache.updateOne({id:id_tache}, {statu:'En cours'}, function(err){
+            if(err) return res.send(err);
+            Demande.updateOne({id:id_demande}, {etat_demande:'En cours'}, function(err){
+                if(err) return res.send( err);
+                return res.redirect('/dashboard');
+            })
+
+        })
     }
 
 };

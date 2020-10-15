@@ -258,6 +258,11 @@ h6 {
   font-size: 18px;
   color: #fff;
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+  
+}
+
+#boutt{
+  width:100px;
 }
 
 .btn--radius {
@@ -619,9 +624,11 @@ input {
   -moz-border-radius: 3px;
   border-radius: 3px;
   background: #fff;
+  
 }
 
 .card-4 {
+ 
   background: #fff;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
