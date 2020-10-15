@@ -53,7 +53,7 @@ module.exports = {
                 console.log("Mety prendre demande");
                 var etat_demande = 'En cours';
                
-                await Demande.update(id_demande, etat_demande, function updateDemande(err){
+                await Demande.updateOne(id_demande, {etat_demande : etat_demande}, function updateDemande(err){
                     if(err) return res.send("Erreur : " + err);
                     console.log("Mety update");
                     return res.redirect('/dashboard');

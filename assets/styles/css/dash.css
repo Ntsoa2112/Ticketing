@@ -1,13 +1,33 @@
 body {
-    background-color: rgb(221, 213, 213);
+    background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
   }
 
 .contenu{
-    background-color: rgb(241, 235, 235);
+    background-color: rgb(240, 233, 233);
+    
 
 }
 
 .test{
-    background-color: rgba(97, 93, 93, 0.952);
+    background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
     color: white;
+}
+
+.prendre{
+    text-decoration: none;
+    font-weight: bold;
+    color: #fc2c77;
+    
+}
+
+.prendre:hover{
+    background-color: white;
+    color: black;
+    text-decoration: none;
+}
+
+#session{
+    font-size: 12px;
+    font-weight: bold;
+    font-style: initial;
 }

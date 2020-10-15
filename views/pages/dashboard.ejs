@@ -40,31 +40,34 @@
             <% } %>
         </li>       
       </ul>
+      <table class="table-dark" style="display: center" id="session">
+        <thead>
+          <tr>
+            <td>Matricule: <%= session.User.matricule %></td>
+          </tr>
+          <tr>
+            <td>Catégorie: <%= session.User.categorie %></td>
+          </tr>
+        </thead>  
+      </table>
     </div>
   </nav>
          
-<br/><br/>
+<br/>
 
   <h2 style="text-align:center">Tableau de bord</h2>
 
-<br/><br/>
-<table class="table-dark" style="display: center">
-  <thead>
-    <tr>
-      <td>Matricule: <%= session.User.matricule %></td>
-    </tr>
-    <tr>
-      <td>Catégorie: <%= session.User.categorie %></td>
-    </tr>
-  </thead>  
-</table>
 
-<br/><br/>
+<br/>
+<div class="card">
+  <div class="card-header">
+
+
  <div class="contenu">
       <!-- NOUVELLE ENTREE -->
   <h4>Nouvelle tâche</h4>
     <table class="table table-hover" >
-        <thead class="test">
+      <thead class="test">
         <tr>
           <th scope="col">#</th>
           <th scope="col">Objet</th>
@@ -78,67 +81,9 @@
         </tr>
       </thead>
       <tbody>
-          <%           
-          for(var i=0; i<demande.length; i++) {
-            if(demande[i].etat_demande == "nouvelle" || demande[i].etat_demande == ''){ %>
-        <tr>
-            <th scope="row"><%= (i+1) %></th>
-            <td><%= demande[i].objet %></td>
-            <td>
-              <%= demande[i].priorite %>
-            </td>
-            <td>
-              <%= demande[i].tache %>
-            </td>
-            <td>
-              <%= demande[i].code %>
-            </td>
-            <td>
-                <%= demande[i].size %>
-              </td>
-            <td>
-              <%= demande[i].chemin %>
-            </td>
-            
-            <td>
-              <%= demande[i].categorie %>
-            </td>
-            <td>
-              <% if(session.User.categorie == 'trans') { %>
-              <a href="/valide_form_demande/<%= demande[i].id %>">Prendre</a>
-              <% }
-              else{ %>
-                  En attente
-                <% } %>
-            </td>
-        </form>
-        </tr>
-        <% 
-            }
-          } %>
-      </tbody>
-    </table>
-    
-   <!-- EN COURS -->
-   <br/><br/>
-   <h4>En-cours</h4>
-
-   <table class="table table-hover">
-      <thead class="test">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Objet</th>
-        <th scope="col">Priorité</th>
-        <th scope="col">Tache</th>
-        <th scope="col">Taille du fichier</th>
-        <th scope="col">Expediteur</th>
-        <th scope="col">Etat</th>
-      </tr>
-    </thead>
-    <tbody>
         <%           
         for(var i=0; i<demande.length; i++) {
-          if(demande[i].etat_demande == "encours"){ %>
+          if(demande[i].etat_demande == "nouvelle"){ %>
       <tr>
           <th scope="row"><%= (i+1) %></th>
           <td><%= demande[i].objet %></td>
@@ -149,71 +94,142 @@
             <%= demande[i].tache %>
           </td>
           <td>
-            <%= demande[i].size %>
+            <%= demande[i].code %>
           </td>
+          <td>
+              <%= demande[i].size %>
+            </td>
+          <td>
+            <%= demande[i].chemin %>
+          </td>
+          
           <td>
             <%= demande[i].categorie %>
           </td>
           <td>
-
-            <a href="/form_demande/<%= demande[i].id %>">Prendre</a>
+            
+            <a type="button" class="btn btn-secondary" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
           </td>
-      </form>
-      </tr>
+       </tr>
       <% 
           }
         } %>
     </tbody>
-   </table>
-   
-
-   <!-- TERMINER -->
+    </table>
+    
+   <!-- EN COURS -->
    <br/><br/>
+   <h4>En-cours</h4>
+
+   <table class="table table-hover" >
+    <thead class="test">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Objet</th>
+        <th scope="col">Priorité</th>
+        <th scope="col">Tache</th>
+        <th scope="col">Code</th>
+        <th scope="col">Taille</th>
+        <th scope="col">Chemin</th>
+        <th scope="col">Expediteur</th>
+        <th scope="col">Etat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%           
+      for(var i=0; i<demande.length; i++) {
+        if(demande[i].etat_demande == "En cours"){ %>
+    <tr>
+        <th scope="row"><%= (i+1) %></th>
+        <td><%= demande[i].objet %></td>
+        <td>
+          <%= demande[i].priorite %>
+        </td>
+        <td>
+          <%= demande[i].tache %>
+        </td>
+        <td>
+          <%= demande[i].code %>
+        </td>
+        <td>
+            <%= demande[i].size %>
+          </td>
+        <td>
+          <%= demande[i].chemin %>
+        </td>
+        
+        <td>
+          <%= demande[i].categorie %>
+        </td>
+        <td>
+          <a type="button" class="btn btn-danger" target="_blank">Stand By</a>
+          <a type="button" class="btn btn-primary" target="_blank">Terminer</a>
+        </td>
+     </tr>
+    <% 
+        }
+      } %>
+  </tbody>
+  </table>
+
+  <!--- TERMINER -->
+  <br/><br/>
   <h4>Terminer</h4>
 
-    <table class="table table-hover">
-      <thead class="test">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Objet</th>
-          <th scope="col">Priorité</th>
-          <th scope="col">Tache</th>
-          <th scope="col">Taille du fichier</th>
-          <th scope="col">Expediteur</th>
-          <th scope="col">Etat</th>
-        </tr>
-      </thead>
-      <tbody>
-          <%           
-          for(var i=0; i<demande.length; i++) {
-            if(demande[i].etat_demande == "terminer"){ %>
-        <tr>
-            <th scope="row"><%= (i+1) %></th>
-            <td><%= demande[i].objet %></td>
-            <td>
-              <%= demande[i].priorite %>
-            </td>
-            <td>
-              <%= demande[i].tache %>
-            </td>
-            <td>
-              <%= demande[i].size %>
-            </td>
-            <td>
-              <%= demande[i].categorie %>
-            </td>
-            <td>
-              <a href="/form_demande/<%= demande[i].id %>">Prendre</a>
-            </td>
-        </form>
-        </tr>
-        <% 
-            }
-          } %>
-      </tbody>
-    </table>
-  </div>  
+  <table class="table table-hover" >
+    <thead class="test">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Objet</th>
+        <th scope="col">Priorité</th>
+        <th scope="col">Tache</th>
+        <th scope="col">Code</th>
+        <th scope="col">Taille</th>
+        <th scope="col">Chemin</th>
+        <th scope="col">Expediteur</th>
+        <th scope="col">Etat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%           
+      for(var i=0; i<demande.length; i++) {
+        if(demande[i].etat_demande == "Terminer"){ %>
+    <tr>
+        <th scope="row"><%= (i+1) %></th>
+        <td><%= demande[i].objet %></td>
+        <td>
+          <%= demande[i].priorite %>
+        </td>
+        <td>
+          <%= demande[i].tache %>
+        </td>
+        <td>
+          <%= demande[i].code %>
+        </td>
+        <td>
+            <%= demande[i].size %>
+          </td>
+        <td>
+          <%= demande[i].chemin %>
+        </td>
+        
+        <td>
+          <%= demande[i].categorie %>
+        </td>
+        <td>
+          <a type="button" class="btn btn-success" target="_blank">Terminer</a>
+        </td>
+     </tr>
+    <% 
+        }
+      } %>
+  </tbody>
+  </table>
+  </div> 
   
+  
+  </div>
+</div>
     
 </body>
 </html>
