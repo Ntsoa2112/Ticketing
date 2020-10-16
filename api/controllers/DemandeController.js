@@ -10,9 +10,12 @@
 module.exports = {
     
     demande_a_trans: function(req, res){
-       Fake.findOne(req.param('code'), function foundOneFake(err, Onefake){
+        console.log("Ety" + req.param('code'));
+       Fake.findOne({code:req.param('code')}, function foundOneFake(err, Onefake){
             if(err) return res.send(err);
+            
             var code = Onefake.code;
+            console.log("Mande" + code);
             var size = Onefake.size;
             var chemin = Onefake.chemin;
             var objet = req.param('objet');
@@ -24,6 +27,7 @@ module.exports = {
                 if(err){
                     res.send(err);
                 }
+                console.log("Tafa: " + code);
                 return res.redirect('/dashboard');
               });
        })

@@ -8,7 +8,7 @@
 module.exports = {
 
   attributes: {
-    code: { type: 'string', required: true },
+    code: { type: 'number', required: true },
     size: { type: 'string', required: true },
     chemin: { type: 'string', required: true },
   },
