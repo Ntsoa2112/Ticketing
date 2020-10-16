@@ -1,313 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenue à l'easytech</title>
-  <link
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  rel="stylesheet"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous"
-/>
-  <link href="css/dash.css" rel="stylesheet" media="all">
-</head>
-<body>  
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <a class="navbar-brand" href="/">TABLEAU DE BORD</a>
-    <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link"  href="/logout">Se déconnecter</a>
-            <% if(session.User.categorie != 'trans'){ %>
-        </li>
-        <li>
-          <a class="nav-link" href="/demander_a_trans">Faire une demande</a>
-            <% } %>
-        </li>       
-      </ul>
-      <table class="table-dark" style="display: center" id="session">
-        <thead>
-          <tr>
-            <td>Matricule: <%= session.User.matricule %></td>
-          </tr>
-          <tr>
-            <td>Catégorie: <%= session.User.categorie %></td>
-          </tr>
-        </thead>  
-      </table>
-    </div>
-  </nav>
-         
-<br/>
-
-  <h2 style="text-align:center">Tableau de bord</h2>
-
-
-<br/>
-<div class="card">
-  <div >
-
-
- <div class="contenu">
-      <!-- NOUVELLE ENTREE -->
-  <h4>Nouvelle tâche</h4>
-    <table class="table table-hover" >
-      <thead class="test">
-        <tr>
-         
-          <th scope="col">Objet</th>
-          <th scope="col">Priorité</th>
-          <th scope="col">Tache</th>
-          <th scope="col">Code</th>
-          <th scope="col">Taille</th>
-          <th scope="col">Chemin</th>
-          <th scope="col">Expediteur</th>
-          <th scope="col">Etat</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%    
-        for(var i=0; i<demande.length; i++) {
-          if(demande[i].etat_demande == 'nouvelle'){ %>
-      <tr>
-         
-          <td>
-            <%= demande[i].objet %>
-          </td>
-          <td>
-            <%= demande[i].priorite %>
-          </td>
-          <td>
-            <%= demande[i].tache %>
-          </td>
-          <td>
-            <%= demande[i].code %>
-          </td>
-          <td>
-              <%= demande[i].size %>
-            </td>
-          <td>
-            <%= demande[i].chemin %>
-          </td>
-          
-          <td>
-            <%= demande[i].categorie %>
-          </td>
-          <td>
-            <% if(session.User.categorie == 'trans'){ %>
-            <a type="button" class="btn btn-secondary" id="boutt" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
-            <%
-            }
-              else{ 
-            %>
-              En attente 
-            <% } %>
-          </td>
-      </tr>
-      <% 
-          }
-        } 
-      %>
-    </tbody>
-    </table>
-    
-   <!-- EN COURS -->
-   <br/><br/>
-   <h4>En-cours</h4>
-
-   <table class="table table-hover" >
-    <thead class="test">
-      <tr>
+    <head>
+        <meta charset="utf-8">
+        <title>Easytech</title>
+        <script type="text/javascript" src='DataTables/media/js/jquery.js'></script>
+        <script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="DataTables/tableau.js"></script>
+        <link rel="stylesheet" type="text/css" href="DataTables/media/css/datatables.css">
+    </head>
+    <body>
         
-        <th scope="col">Objet</th>
-        <th scope="col">Priorité</th>
-        <th scope="col">Tache</th>
-        <th scope="col">Code</th>
-        <th scope="col">Taille</th>
-        <th scope="col">Chemin</th>
-        <th scope="col">Expediteur</th>
-        <th scope="col">Réalisateur</th>
-        <th scope="col">Début</th>
-        <th scope="col">Etat</th>
-      </tr>
-    </thead>
-    <tbody>
-      <%           
-      for(var i=0; i < tache_en_cours.length; i++) {
-        if(tache_en_cours[i].statu != 'Terminer'){
-        var id_demande = tache_en_cours[i].id_demande;
-        var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
-        var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
-
-        %>
-    <tr>
-        
-        <%           
-        for(var j=0; j<demande.length; j++) {
-            if(demande[j].id == id_demande){
-
-        %>
-          <td>
-            <%= demande[j].objet %>
-          </td>
-          <td>
-            <%= demande[j].priorite %>
-          </td>
-          <td>
-            <%= demande[j].tache %>
-          </td>
-          <td>
-            <%= demande[j].code %>
-          </td>
-          <td>
-              <%= demande[j].size %>
-            </td>
-          <td>
-            <%= demande[j].chemin %>
-          </td>
-          
-          <td>
-            <%= demande[j].categorie %>
-          </td>
-        <%
-            }
-          }
-        %>
-
-        <td>
-          <%= tache_en_cours[i].matricule_trans %>
-        </td>
-        <td>
-            <%= dateDebut %> à <%= timedebut %>
-        </td>
-        <td>
-            <% 
-            if(tache_en_cours[i].statu == 'Stand By'){
-            %>
-              <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
-              <% 
-              if(session.User.categorie == 'trans'){
-                if(session.User.matricule == tache_en_cours[i].matricule_trans){
-              %>
-              <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
-            <%
-                }
-              }
-            }
-            
-            else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
-              <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
-              <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
-            <% 
-              }
-              else{
-            %>
-              En cours
-            <%
-              }
-            %>
-        </td>
-     </tr>
-    <% 
-        }
-      }
-    %>
-  </tbody>
-  </table>
-
-  <!--- TERMINER -->
-  <br/><br/>
-   <h4>Terminer</h4>
-
-   <table class="table table-hover" >
-      <thead class="test">
-        <tr>
-         
-          <th scope="col">Objet</th>
-          <th scope="col">Priorité</th>
-          <th scope="col">Tache</th>
-          <th scope="col">Code</th>
-          <th scope="col">Taille</th>
-          <th scope="col">Chemin</th>
-          <th scope="col">Expediteur</th>
-          <th scope="col">Réalisateur</th>
-          <th scope="col">Début</th>
-          <th scope="col">Fin</th>
-        </tr>
-      </thead>
-      <tbody>
-        <%           
-        for(var i=0; i<demande.length; i++) {
-          if(demande[i].etat_demande == "Terminer"){ 
-            var id_demande = demande[i].id;
-            %>
-      <tr>
-         
-          <td><%= demande[i].objet %></td>
-          <td>
-            <%= demande[i].priorite %>
-          </td>
-          <td>
-            <%= demande[i].tache %>
-          </td>
-          <td>
-            <%= demande[i].code %>
-          </td>
-          <td>
-              <%= demande[i].size %>
-            </td>
-          <td>
-            <%= demande[i].chemin %>
-          </td>
-          
-          <td>
-            <%= demande[i].categorie %>
-          </td>
-          <td>
-              <%
-              for(var e=0; e < tache_en_cours.length; e++) {
-                if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
-                  var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
-                  var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
+        <table id='tab' class='display'>
+        <caption>Nouvelle tâche</caption>
+            <thead>
+                <tr>      
+                    <th scope="col">Objet</th>
+                    <th scope="col">Priorité</th>
+                    <th scope="col">Tache</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Taille</th>
+                    <th scope="col">Chemin</th>
+                    <th scope="col">Expediteur</th>
+                    <th scope="col">Etat</th>
+                  </tr>
+            </thead>
+            <tbody>
+                <%    
+                for(var i=0; i<demande.length; i++) {
+                  if(demande[i].etat_demande == 'nouvelle'){ %>
+                <tr>
+                 
+                  <td>
+                    <%= demande[i].objet %>
+                  </td>
+                  <td>
+                    <%= demande[i].priorite %>
+                  </td>
+                  <td>
+                    <%= demande[i].tache %>
+                  </td>
+                  <td>
+                    <%= demande[i].code %>
+                  </td>
+                  <td>
+                      <%= demande[i].size %>
+                    </td>
+                  <td>
+                    <%= demande[i].chemin %>
+                  </td>
+                  
+                  <td>
+                    <%= demande[i].categorie %>
+                  </td>
+                  <td>
+                    <% if(session.User.categorie == 'trans'){ %>
+                    <a type="button" class="btn btn-secondary" id="boutt" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
+                    <%
+                    }
+                      else{ 
+                    %>
+                      En attente 
+                    <% } %>
+                  </td>
+                </tr>
+                <% 
+                    }
+                  } 
                 %>
-                <%= tache_en_cours[e].matricule_trans %>
-                
-          </td>
-          <td>
-              <%= dateDebut %> à <%= timedebut %>
-          </td>
-          <td>
-              <%= tache_en_cours[e].H_fin_transfert %>
-          </td>
-              <%                 
-                }
-              }             
-              %>
-       </tr>
-      <% 
-          }
-        } 
-      %>
-    </tbody>
-    </table>
-  </div> 
-  </div>
-</div>
-    
-</body>
+              </tbody>
+        </table>
+
+        <table id='tab2' class='display'>
+            <caption>Tâche en cours</caption>
+                <thead>
+                    <tr>       
+                        <th scope="col">Objet</th>
+                        <th scope="col">Priorité</th>
+                        <th scope="col">Tache</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Taille</th>
+                        <th scope="col">Chemin</th>
+                        <th scope="col">Expediteur</th>
+                        <th scope="col">Réalisateur</th>
+                        <th scope="col">Début</th>
+                        <th scope="col">Etat</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    <%           
+                    for(var i=0; i < tache_en_cours.length; i++) {
+                      if(tache_en_cours[i].statu != 'Terminer'){
+                      var id_demande = tache_en_cours[i].id_demande;
+                      var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
+                      var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
+              
+                      %>
+                    <tr>
+                      
+                      <%           
+                      for(var j=0; j<demande.length; j++) {
+                          if(demande[j].id == id_demande){
+              
+                      %>
+                        <td>
+                          <%= demande[j].objet %>
+                        </td>
+                        <td>
+                          <%= demande[j].priorite %>
+                        </td>
+                        <td>
+                          <%= demande[j].tache %>
+                        </td>
+                        <td>
+                          <%= demande[j].code %>
+                        </td>
+                        <td>
+                            <%= demande[j].size %>
+                          </td>
+                        <td>
+                          <%= demande[j].chemin %>
+                        </td>
+                        
+                        <td>
+                          <%= demande[j].categorie %>
+                        </td>
+                      <%
+                          }
+                        }
+                      %>
+              
+                      <td>
+                        <%= tache_en_cours[i].matricule_trans %>
+                      </td>
+                      <td>
+                          <%= dateDebut %> à <%= timedebut %>
+                      </td>
+                      <td>
+                          <% 
+                          if(tache_en_cours[i].statu == 'Stand By'){
+                          %>
+                            <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
+                            <% 
+                            if(session.User.categorie == 'trans'){
+                              if(session.User.matricule == tache_en_cours[i].matricule_trans){
+                            %>
+                            <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
+                          <%
+                              }
+                            }
+                          }
+                          
+                          else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
+                            <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
+                            <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
+                          <% 
+                            }
+                            else{
+                          %>
+                            En cours
+                          <%
+                            }
+                          %>
+                      </td>
+                    </tr>
+                    <% 
+                        }
+                      }
+                    %>
+              </tbody>
+        </table>
+
+        <table id='tab3' class='display'>
+            <caption>Tâche terminé</caption>
+                <thead>
+                    <tr>        
+                        <th scope="col">Objet</th>
+                        <th scope="col">Priorité</th>
+                        <th scope="col">Tache</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Taille</th>
+                        <th scope="col">Chemin</th>
+                        <th scope="col">Expediteur</th>
+                        <th scope="col">Réalisateur</th>
+                        <th scope="col">Début</th>
+                        <th scope="col">Fin</th>
+                      </tr>
+                </thead>
+                <tbody>
+                    <%           
+                    for(var i=0; i<demande.length; i++) {
+                      if(demande[i].etat_demande == "Terminer"){ 
+                        var id_demande = demande[i].id;
+                        %>
+                    <tr>
+                     
+                      <td><%= demande[i].objet %></td>
+                      <td>
+                        <%= demande[i].priorite %>
+                      </td>
+                      <td>
+                        <%= demande[i].tache %>
+                      </td>
+                      <td>
+                        <%= demande[i].code %>
+                      </td>
+                      <td>
+                          <%= demande[i].size %>
+                        </td>
+                      <td>
+                        <%= demande[i].chemin %>
+                      </td>
+                      
+                      <td>
+                        <%= demande[i].categorie %>
+                      </td>
+                      <td>
+                          <%
+                          for(var e=0; e < tache_en_cours.length; e++) {
+                            if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
+                              var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
+                              var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
+                            %>
+                            <%= tache_en_cours[e].matricule_trans %>
+                            
+                      </td>
+                      <td>
+                          <%= dateDebut %> à <%= timedebut %>
+                      </td>
+                      <td>
+                          <%= tache_en_cours[e].H_fin_transfert %>
+                      </td>
+                          <%                 
+                            }
+                          }             
+                          %>
+                   </tr>
+                    <% 
+                        }
+                      } 
+                    %>
+                  </tbody>
+        </table>
+
+    </body>
 </html>

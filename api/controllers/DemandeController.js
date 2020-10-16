@@ -22,7 +22,7 @@ module.exports = {
             var matricule = req.session.User.matricule;
             Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
                 if(err){
-                    res.send("Erreur:" + err);
+                    res.send(err);
                 }
                 return res.redirect('/dashboard');
               });
@@ -64,7 +64,6 @@ module.exports = {
 
     valider_form_terminer: function(req, res){
         var id_demande = req.param('id_demande');
-        console.log("Ety");
         Demande.findOne(id_demande, function foundOneFake(err, OneDemande){
             if(err) return res.send(err);
             Effectuer_tache.findOne({id_demande:id_demande}, function foundOneDemande(err, OneTache){
